@@ -1,0 +1,67 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "sh",
+            "type": "shell",
+            "command": "./build-linux.sh",
+            "args": [
+                "-t", "rk3588",
+				"-a", "aarch64",
+				"-d", "yolov8" 
+            ],
+			"options": {
+			    // 进入build
+			    // "${workspaceFolder}/build"：根下
+			    // "${fileDirname}"：当前
+		        "cwd": "${workspaceFolder}"
+			},
+			"group": {
+                "kind":"test", // Run test task
+                "isDefault":true
+            }
+        },
+        {
+            "label": "ld",
+			"type": "shell",
+            "command": "export LD_LIBRARY_PATH=./lib", // 查看本机MinGW, linux下识别核心数
+            "args": [
+            ],
+            "options": {
+			    // 进入build
+			    // "${workspaceFolder}/bin"：根下
+			    // "${fileDirname}"：当前
+		        "cwd": "${workspaceFolder}" 
+			},
+			"group": {
+                "kind":"build",
+                "isDefault":true
+            }
+        },
+		{
+            "label": "exe",
+			"type": "shell",
+            "command": "./rknn_yolov8_demo model/yolov8.rknn model/bus.jpg", // 查看本机MinGW, linux下识别核心数
+            "args": [
+            ],
+            "options": {
+			    // 进入build
+			    // "${workspaceFolder}/bin"：根下
+			    // "${fileDirname}"：当前
+		        "cwd": "${fileDirname}"
+			},
+			"group": {
+                "kind":"build",
+                "isDefault":true
+            }
+        },
+        {
+            "label":"Build my project", // launch文件需要对应
+            "dependsOn":[
+                "sh",
+                "ld",
+				"exe"                
+            ]
+        }
+    ]
+}
