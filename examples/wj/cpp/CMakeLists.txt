@@ -78,8 +78,8 @@ target_include_directories(${PROJECT_NAME} PRIVATE
 # 访问权限以及访问路径设置
 install(TARGETS ${PROJECT_NAME} DESTINATION .)
 # ！！！！！要改！！！！！！！
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/../model/bus.jpg DESTINATION model)
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/../model/coco_80_labels_list.txt DESTINATION model)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/../model/test.jpg DESTINATION model)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/../model/mydata_labels_list.txt DESTINATION model)
 # 查找模型位置
 file(GLOB RKNN_FILES "${CMAKE_CURRENT_SOURCE_DIR}/../model/*.rknn")
 install(FILES ${RKNN_FILES} DESTINATION model)
