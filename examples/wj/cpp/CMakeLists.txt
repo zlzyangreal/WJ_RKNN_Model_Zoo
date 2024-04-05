@@ -13,7 +13,6 @@ if (ENABLE_ASAN)
 	set (CMAKE_LINKER_FLAGS_DEBUG "${CMAKE_LINKER_FLAGS_DEBUG} -fno-omit-frame-pointer -fsanitize=address")
 endif ()
 
-set(rknpu_yolov8_file rknpu2/yolov8.cc)
 # 用不上
 if (TARGET_SOC STREQUAL "rv1106" OR TARGET_SOC STREQUAL "rv1103")
     add_definitions(-DRV1106_1103)
@@ -26,11 +25,14 @@ if(TARGET_SOC STREQUAL "rk1808" OR TARGET_SOC STREQUAL "rv1109" OR TARGET_SOC ST
     add_definitions(-DRKNPU1)
     set(rknpu_yolov8_file rknpu1/yolov8.cc)
 endif()
+
 # 添加存放源文件的子目录
+set(rknpu_yolov8_file rknpu2/yolov8.cc)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../../../3rdparty/ 3rdparty.out)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../../../utils/ utils.out)
 
 set(CMAKE_INSTALL_RPATH "$ORIGIN/../lib") # 安装lib并可执行时找到，很好的宏
+# $ORIGIN 表示正在运行的可执行文件的所在目录
 
 # SRCS 变量将包含所有 rknn_model_zoo/examples/yolov8/cpp 目录下以 .cc 结尾的文件的完整路径
 file(GLOB SRCS ${CMAKE_CURRENT_SOURCE_DIR}/*.cc) # 匹配
@@ -40,7 +42,7 @@ add_executable(${PROJECT_NAME}
     main.cc
     postprocess.cc
     ${rknpu_yolov8_file}
-)
+) # build下
 
 # 链接系列插件库，来自utils，dl是一个系统库，用于在 Linux 系统上进行动态链接，LIBRKNNRT来自第三方库
 target_link_libraries(${PROJECT_NAME}

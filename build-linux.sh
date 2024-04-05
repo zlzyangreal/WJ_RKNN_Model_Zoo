@@ -96,7 +96,7 @@ for demo_path in `find examples -name ${BUILD_DEMO_NAME}`
 do
     if [ -d "$demo_path/cpp" ]
     then
-        BUILD_DEMO_PATH="$demo_path/cpp"
+        BUILD_DEMO_PATH="$demo_path/cpp" 
         break;
     fi
 done
